@@ -1,0 +1,43 @@
+/*
+Program: lab03prog
+Author: Clayton
+Date: 9/08/2014
+program to do math 
+
+*/
+
+#include <stdio.h>
+#include <math.h>
+
+// this is where the calculation are done.
+int main(void) {
+
+   int sides;
+   int radius;
+   int para;
+   int central_ang;
+   double side_leng;
+   float num_feet;
+   
+   printf("\nEnter the number of sides follow by radius: ");
+   scanf("%d%d", &sides,&radius);
+
+   central_ang = 360/sides;
+
+   side_leng = 2*radius*sin(M_PI/sides);
+
+   para = sides * side_leng;
+
+   num_feet = para/12;
+   
+// Print calculation results
+   printf("\n");
+   printf("The number of side is %d\n", sides);
+   printf("The radius is %d\n", radius);
+   printf("The center angle is %d\n", central_ang);
+   printf("the side length is %lf\n", side_leng);
+   printf("the para is %d inches and the %f\n feet", para,num_feet);
+   printf("\n"); 
+   return 0;
+}
+
