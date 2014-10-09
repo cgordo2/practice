@@ -30,3 +30,8 @@ lex.yy.o: lex.yy.c
 clean:
 	rm -f run *.o parse.tab.c lex.yy.c
 	rm -f parse.tab.h
+	rm -f graph.gv
+	rm -f graph.png
+
+graph:
+	dot -Tpng graph.gv -o graph.png

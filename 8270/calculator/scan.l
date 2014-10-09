@@ -2,6 +2,8 @@
 #define YYSTYPE double
 #include "parse.tab.h"
 #include <stdlib.h>
+#include <string>
+extern std::string textvalues;
 %}
 
 white [ \t]+
@@ -13,19 +15,18 @@ real {integer}("."{integer})?{exponent}?
 %%
 
 {white} { }
-{real} { yylval=atof(yytext); 
+{real} { yylval=atof(yytext); textvalues=textvalues+yytext;
  return NUMBER;
 }
 
-"+" return PLUS;
-"-" return MINUS;
-"**" return POWER;
-"*" return TIMES;
-"/" return DIVIDE;
-
-"(" return LEFT;
-")" return RIGHT;
-"\n" return END;
+"+" {textvalues=textvalues+"+"; return PLUS;}
+"-" { textvalues=textvalues+"-";return MINUS;}
+"**" {textvalues=textvalues+"**";return POWER;}
+"*" {textvalues=textvalues+"*";return TIMES;}
+"/" {textvalues=textvalues+"/";return DIVIDE;}
+"(" {textvalues=textvalues+"(";return LEFT;}
+")" {textvalues=textvalues+")";return RIGHT;}
+"\n" {textvalues=textvalues+"\t";return END;}
 %%
 int yywrap() {
   yylex_destroy();

@@ -1,11 +1,12 @@
 %{
 #include <iostream>
 #include "ast.h"
+
 extern int yylex();
-  void yyerror(const char *s) { std::cout << s << std::endl; }
-  void yyerror(const char *s, const char ch) {
-    std::cout << s << ch << std::endl;
-  }	
+void yyerror(const char *s) { std::cout << s << std::endl; }
+void yyerror(const char *s, const char ch) {
+  std::cout << s << ch << std::endl; }
+extern std::fstream output1;
 %}
 
 %union {
@@ -34,14 +35,14 @@ Input:
 Line:
      END
      | Expression END  {
-           std::cout << "= " << eval($1) << std::endl;
-           treeFree($1);
-           std::cout << "> ";
-         }
-;
+          std::cout << "= " << eval($1) << std::endl;
+          std::cout << "> ";
+          makeGraph($1, output1);
+          treeFree($1);
+          };
 
 Expression:
-     NUMBER {$$ = new AstNumber('K', $1);  }
+  NUMBER {$$ = new AstNumber('K', $1); }
 | Expression PLUS Expression { $$ = new AstNode('+', $1,$3); }
 | Expression MINUS Expression { $$ = new AstNode('-', $1,$3);}
 | Expression TIMES Expression {  $$ = new AstNode('*', $1,$3); }

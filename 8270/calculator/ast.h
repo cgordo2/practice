@@ -3,18 +3,31 @@
 //  Adapted by Brian Malloy
 
 #include <string>
+#include <iostream>
+#include <fstream>
 extern void yyerror(const char*);
 extern void yyerror(const char*, const char);
+extern std::fstream output1;
 
 class Ast {
+
 public:
-  Ast(int n) : nodetype(n) {}
+  int getid() const{return id;}
+  int setid()
+  {
+    static int idcount = 0; // static counter for the id
+    return idcount++;
+  }
+ 
+  
+  Ast(int n) : id (setid()), nodetype(n) {}
   virtual ~Ast() {}
   char getNodetype() const { return nodetype; }
-  virtual Ast* getLeft() const { throw std::string("No Left"); }
-  virtual Ast* getRight() const { throw std::string("No Right"); }
+  virtual Ast* getLeft() const { return 0; }
+  virtual Ast* getRight() const { return 0; }
   virtual double getNumber() const { throw std::string("No Number"); }
 private:
+  int id;
   char nodetype;
 };
 
@@ -42,4 +55,5 @@ private:
 
 double eval(Ast*);   // Evaluate an AST
 void treeFree(Ast*); // delete and free an AST 
+void makeGraph(const Ast* , std::fstream& );
 

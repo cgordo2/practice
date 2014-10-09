@@ -1,0 +1,6 @@
+digraph G {
+0[label ="<f1>Left|<f2>2|<f3>Right" color=blue fontcolor=black shape=record   fontsize=12 ]
+
+ labelloc="t"
+ label="Clayton's Graphs \n2	"
+}
