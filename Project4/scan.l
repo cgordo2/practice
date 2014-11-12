@@ -38,7 +38,8 @@ float       {digits}"."{digits}
 "end"      { return END; }
 "return"   { return RETURN; }
 
-{ident}    { 
+{ident}    {  yylval.id = new char[strlen(yytext)+1];
+  strcpy(yylval.id, yytext);
 	     return IDENT; }
 
 {float}    { 

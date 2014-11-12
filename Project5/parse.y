@@ -3,19 +3,24 @@
 #include <cmath>    
 #include <map>
 #include <math.h>
+
 #include "ast.h"   
 
 extern int yylex();
+
   void yyerror(const char * msg){ std::cout << msg << std::endl; }
   void yyerror(const char *msg, const char ch) {
     std::cout << msg << ch << std::endl;
   }
-  std::map<std::string, int>table;
+  std::map<char*, int>table;
 %}
+
+
 %union {
   Node* ast;
   double dub;
-  char *id;
+  int num;
+  char * id;
 }
 
 %token CR
@@ -42,7 +47,7 @@ extern int yylex();
 
 %nonassoc less_than_else
 %nonassoc ELSE
-%type<ast> expr start funcdef parm_list stmt selection line
+%type<ast> expr start funcdef parm_list stmt selection line 
 %%
 
 start   : start funcdef {$$ = 0;}
@@ -70,9 +75,9 @@ selection
         | IF expr COLON stmt ELSE COLON stmt END{$$ = 0;}
         ;
 
-line    : IDENT ASSIGN expr {$$ = 0;}
+line    : IDENT ASSIGN expr {table[$1] = $3->eval();}
         | IDENT LPAREN parm_list RPAREN {$$ = 0;}
-        | PRINT expr {$$ = 0;}
+        | PRINT expr {std::cout<< $2->eval();}
         | RETURN expr{$$ = 0;}
         ;
 
@@ -82,20 +87,15 @@ expr    : expr PLUS expr { $$ = new AddBinaryNode($1, $3); }
         | expr EXPON expr { $$ = new ExpBinaryNode($1, $3); }
         | expr DIV expr  { $$ = new DivBinaryNode($1, $3);}
         | expr MOD expr { $$ = new ModBinaryNode($1, $3); }
-        | expr LESS expr; 
-        | expr LESSEQ expr;
-        | expr GREAT expr;
-        | expr GREATEQ expr;
-        | expr NOTEQ expr;
-        | expr EQ expr ;
+        | expr LESS expr {$$=0;}
+        | expr LESSEQ expr {$$=0;}
+        | expr GREAT expr {$$=0;}
+        | expr GREATEQ expr{$$=0;}
+        | expr NOTEQ expr {$$=0;}
+        | expr EQ expr {$$=0;}
         | MINUS expr { $$ = new UnaryMinusNode($2);}
         | NUMBER { $$ = new NumberNode($1);        }
-        | IDENT{
-                std::map<std::string, int>::iterator pos = table.find($1);
-                if (pos !=table.end())$$ = pos->second;
-                else $$=0;
-                delete []$1;
-                }
+        | IDENT { $$ = new IdentNode($1);}
         | LPAREN expr RPAREN {$$ = $2;}
         ;
 

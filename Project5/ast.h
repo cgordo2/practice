@@ -1,9 +1,13 @@
 //  Declarations for an calculator that builds an AST
 //  and a graphical representation of the AST.
 //  by Brian Malloy
-
+#ifndef _ASTHEAD_H_
+#define _ASTHEAD_H_
 #include <string>
+#include <map>
+#include <cstdlib>
 #include <fstream>
+extern std::map<char*, int> table;
 extern void yyerror(const char*);
 extern void yyerror(const char*, const char);
 
@@ -13,6 +17,7 @@ public:
   virtual ~Node() {}
   virtual double eval() const = 0;
   int getId() const { return id; }
+  virtual char* getIdent(){return NULL;}
 private:
   int id;
   static int idCount;
@@ -22,9 +27,19 @@ class NumberNode : public Node {
 public:
   NumberNode(double n) : Node(), number(n) {} 
   virtual ~NumberNode() {}
-  virtual double eval() const { return number; }
+  virtual double eval() const {return number; }
 private:
   double number;
+};
+
+class IdentNode : public Node {
+public:
+  IdentNode(char* n) : Node(), Ident(n) {} 
+  virtual ~IdentNode() {}
+  virtual double eval() const ;
+  char* getIdent()const {return Ident;}
+private:
+  char* Ident;
 };
 
 class BinaryNode : public Node {
@@ -55,6 +70,7 @@ public:
 class SubBinaryNode : public BinaryNode {
 public:
   SubBinaryNode(Node* left, Node* right) : BinaryNode(left, right) { }
+
   virtual double eval() const;
 };
 
@@ -82,3 +98,4 @@ public:
   virtual double eval() const;
 };
 
+#endif

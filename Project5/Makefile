@@ -7,7 +7,7 @@ LEXFLAGS = -Wno-unused
 LEXDEBUG = -d
 YACCDEBUG = -vtd
 
-OBJS = main.o parse.tab.o lex.yy.o
+OBJS = main.o parse.tab.o lex.yy.o ast.o
 
 all: run
 

@@ -1,12 +1,15 @@
 %{
 #include <iostream>
 #include <cstring>
-#include "parse.tab.h"
+#include <string>
 #include "ast.h"
+#include "parse.tab.h"
+
+
 
 
 %}
-%option noyywrap
+
 
 letter      [a-zA-Z]
 ident       {letter}({letter}|{digit})*
@@ -40,14 +43,16 @@ float       {digits}"."{digits}
 "end"      { return END; }
 "return"   { return RETURN; }
 
-{ident}    { yylval.id = new char[strlen(yytext)+1];
-             strcpy(yylval.id, yytext);
-	     return IDENT; }
+{ident}    { 
+		yylval.id = new char[strlen(yytext)+1];
+  		strcpy(yylval.id, yytext);
+  		return IDENT; }
 
 {float}    { 
              return FLOAT; 
            }
 {digits}   { 
+			yylval.dub = atoi(yytext);
              return NUMBER; 
            }
 "#"[^\n]*  { ; }

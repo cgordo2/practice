@@ -2,8 +2,9 @@
 #include <sstream>
 #include <cmath>
 #include <cstdlib>
+#include <algorithm>
 #include "ast.h"
-
+extern std::map <char*, int>table;
 int power(int lhs, int rhs) { return pow(lhs, rhs); }
 
 BinaryNode::~BinaryNode() {
@@ -37,3 +38,17 @@ double ExpBinaryNode::eval() const {
   return power(left->eval(), right->eval()); 
 }
 
+
+double IdentNode::eval() const {
+  std::cout<<"ident in eval: " << Ident<<std::endl;
+std::map<char*, int>::const_iterator ptr = table.find(Ident);
+  if ( ptr == table.end() ) {
+    std::cout<<"Didn't FInd Ident";
+   return 0;
+  }
+  else {
+    std::cout<<"foudn ident"<<std::endl;;
+    std::cout<<ptr->second;
+    return ptr->second;
+  }//table find stuff here;
+} 
