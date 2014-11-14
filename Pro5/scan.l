@@ -5,12 +5,7 @@
 #include "ast.h"
 #include "parse.tab.h"
 
-:q!
-:
 
-
-
-:
 
 
 %}
@@ -23,7 +18,6 @@ digits      [0-9]+
 float       {digits}"."{digits}
 
 %%
-q!
 
 "**"       { return EXPON; }
 "="        { return ASSIGN; }

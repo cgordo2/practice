@@ -19,6 +19,7 @@ public:
   int getId() const { return id; }
   virtual char* getIdent(){return NULL;}
 private:
+
   int id;
   static int idCount;
 };
@@ -31,6 +32,8 @@ public:
 private:
   double number;
 };
+
+// insert
 
 class IdentNode : public Node {
 public:
@@ -50,6 +53,13 @@ public:
 protected:
   Node *left;
   Node *right;
+};
+
+// assign node 
+class AssignNode : public BinaryNode {
+public:
+  AssignNode(Node* l, Node* r) : BinaryNode(left, right) { }
+  virtual double eval() const;
 };
 
 class UnaryMinusNode : public Node {

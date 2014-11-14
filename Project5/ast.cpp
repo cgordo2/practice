@@ -38,6 +38,12 @@ double ExpBinaryNode::eval() const {
   return power(left->eval(), right->eval()); 
 }
 
+// CODE FOR THE ASSIGN NODE 
+double AssignNode::eval() const{
+
+        table [IdentNode(left)->getIdent()] = right->eval();
+ //return (left->eval(), right->eval()); 
+}
 
 double IdentNode::eval() const {
   std::cout<<"ident in eval: " << Ident<<std::endl;
