@@ -77,7 +77,7 @@ private:
 
 class AstPrint : public Ast {
 public:
-  AstPrint(char nodetype, Ast* l) : Ast(nodetype), left(l) {} 
+  AstPrint(char nodetype, char* n) : Ast(nodetype), left(l) {} 
   virtual ~AstPrint() {}
   virtual Ast* getLeft() const { return left; }
 private:
