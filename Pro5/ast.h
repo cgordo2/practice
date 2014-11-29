@@ -77,7 +77,7 @@ private:
 
 class AstPrint : public Ast {
 public:
-  AstPrint(char nodetype, char* n) : Ast(nodetype), left(l) {} 
+  AstPrint(char nodetype, Ast* l) : Ast(nodetype), left(l) {} 
   virtual ~AstPrint() {}
   virtual Ast* getLeft() const { return left; }
 private:
@@ -92,8 +92,86 @@ public:
 private:
   Ast *left;
 };
+// inssert here 
+class AstStart : public Ast {
+public:
+  AstStart(char nodetype, Ast* l) : Ast(nodetype), left(l) {} 
+  virtual ~AstStart() {}
+  virtual Ast* getLeft() const { return left; }
+private:
+  Ast *left;
+};
 
+class AstFuncdef : public Ast {
+public:
+  AstFuncdef(char nodetype, char* i , Ast* p , Ast* s) : Ast(nodetype), ident(i), parm(p), stmt(s) {} 
+  virtual ~AstFuncdef() {}
+  //virtual Ast* getLeft() const { return left; }
+private:
+  char *ident;
+  Ast *parm;
+  Ast *stmt;
+};
 
+class AstParm : public Ast {
+public:
+  AstParm(char nodetype, Ast* l ,Ast* r) : Ast(nodetype), left(l) ,right(r){} 
+  virtual ~AstParm() {}
+  virtual Ast* getLeft() const { return left; }
+private:
+  Ast *left;
+  Ast *right;
+};
+
+class AstExpress : public Ast {
+public:
+  AstExpress(char nodetype, Ast* l) : Ast(nodetype), left(l) {} 
+  virtual ~AstExpress() {}
+  virtual Ast* getLeft() const { return left; }
+private:
+  Ast *left;
+};
+
+class AstSelect : public Ast {
+public:
+  AstSelect(char nodetype, Ast* l ,Ast* r) : Ast(nodetype), left(l), right(r) {} 
+  virtual ~AstSelect() {}
+  virtual Ast* getLeft() const { return left; }
+private:
+  Ast *left;
+  Ast *right;
+};
+
+class AstIf : public Ast {
+public:
+  AstIf(char nodetype, Ast* l, Ast* r) : Ast(nodetype), left(l), right(r) {} 
+  virtual ~AstIf() {}
+  virtual Ast* getLeft() const { return left; }
+private:
+  Ast *left;
+  Ast *right;
+};
+
+class AstElse : public Ast {
+public:
+  AstElse(char nodetype,Ast* i, Ast* t, Ast* e ) : Ast(nodetype), iff(i), then(t), else1(e)  {} 
+  virtual ~AstElse() {}
+  //virtual Ast* getLeft() const { return left; }
+private:
+  Ast *iff;
+  Ast *then;
+  Ast *else1;
+};
+
+class AstFunc : public Ast {
+public:
+  AstFunc(char nodetype, char* i, Ast* l ) : Ast(nodetype), ident(i), left(l) {} 
+  virtual ~AstFunc() {}
+  virtual Ast* getLeft() const { return left; }
+private:
+  char *ident;
+  Ast *left;
+};
 double eval(Ast*);   // Evaluate an AST
 void treeFree(Ast*); // delete and free an AST 
 void makeGraph(const Ast* , std::fstream& ) ;

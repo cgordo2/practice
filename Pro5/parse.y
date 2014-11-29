@@ -51,29 +51,29 @@ extern int yylex();
 %type<ast> expr start funcdef parm_list stmt selection line 
 %%
 
-start   : start funcdef {$$ = 0;}
+start   : start funcdef {$$ = new AstStart('a',$2);}//{$$ = 0;}
         | { ; } 
         ;
 
-funcdef : DEF IDENT LPAREN parm_list RPAREN COLON stmt END {; yyerrok;}
+funcdef : DEF IDENT LPAREN parm_list RPAREN COLON stmt END {$$ = new AstFuncdef('b', $2,$4,$7); yyerrok;}
         | CR {$$ = 0;}
         ;           
 
 parm_list 
-        : expr COMMA parm_list {$$ = 0;}
-        | expr {$$ = 0;}
-        |{$$ = 0;}
+        : expr COMMA parm_list {$$ = new AstParm('c',$1,$3);}//{$$ = 0;}
+        | expr {$$ = new AstExpress('d',$1);}//{$$ = 0;}
+        | {$$ = 0;}
         ;
 
-stmt    : line stmt {$$ = new AstStmt('s',$1);}//{$$ = 0;}
-        | selection stmt {$$ = 0;}
-        | CR stmt{$$ = 0;}
-        |   {$$=0;}//{$$ = new AssignNode ($1, $3);} // list of statement. 
+stmt    : line stmt {$$ = new AstStmt('s',$1);}
+        | selection stmt {$$ = new AstSelect('f',$1,$2);}//{$$ = 0;}
+        | CR stmt{$$ = new AstStmt('s',$2);} //{$$ = 0;}
+        | {$$=0;}
         ;
 
 selection 
-        : IF expr COLON stmt %prec less_than_else END {$$ = 0;}
-        | IF expr COLON stmt ELSE COLON stmt END{$$ = 0;}
+        : IF expr COLON stmt %prec less_than_else END {$$ = new AstIf('j',$2,$4);}//{$$ = 0;}
+        | IF expr COLON stmt ELSE COLON stmt END {$$ = new AstElse('n',$2,$4,$7);}//{$$ = 0;}
         ;
 
 line    : IDENT ASSIGN expr {$$ = new AstAssign('=',$1,$3);}

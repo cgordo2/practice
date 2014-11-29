@@ -88,16 +88,16 @@ selection
         ;
 
 line    : IDENT ASSIGN expr {$$ = new AssignNode (new IdentNode($1), $3);} //{table[$1] = $3->eval();}
-        | IDENT LPAREN parm_list RPAREN {$$ = new FuncNode($1,$3);}//{$$ = 0;} //function node
+        | IDENT LPAREN parm_list RPAREN {$$ = new FuncNode($1,$3);}
         | PRINT expr {
             std::cout << "PRINTING: " << $2->eval() << std::endl;
             $$ = new PrintNode($2); 
           } //printing  out 
         | RETURN expr{$$ = 0;}
-        | CR expr { 
-            std::cout << "Tracking, $2 is: " << $2->eval() << std::endl;
+        | expr { 
+            std::cout << "Tracking, $2 is: " << $1->eval() << std::endl;
             //$$ = $2;
-            $$ = new ExpressNode($2);
+            $$ = new ExpressNode($1);
           }
         ;
 

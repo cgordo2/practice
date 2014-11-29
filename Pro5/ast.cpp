@@ -17,12 +17,12 @@ double eval(Ast *a) {
   case '-': v = eval(a->getLeft()) - eval(a->getRight()); break;
   case '*': v = eval(a->getLeft()) * eval(a->getRight()); break;
   case '/': v = eval(a->getLeft()) / eval(a->getRight()); break;
-  case 'l': if (eval(a->getLeft()) < eval(a->getRight())){v=1;}else{v=0;} break;
-  case 'L': if (eval(a->getLeft()) <= eval(a->getRight())){v=1;}else{v=0;} break;
-  case 'g': if (eval(a->getLeft()) > eval(a->getRight())){v=1;}else{v=0;} break;
-  case 'G': if (eval(a->getLeft()) >= eval(a->getRight())){v=1;}else{v=0;} break;
-  case 'e': if (eval(a->getLeft()) != eval(a->getRight())){v=1;}else{v=0;} break;
-  case 'E': if (eval(a->getLeft()) == eval(a->getRight())){v=1;}else{v=0;} break;
+  case 'l': if (eval(a->getLeft()) < eval(a->getRight())){v=1;}else{v=0;}; break;
+  case 'L': if (eval(a->getLeft()) <= eval(a->getRight())){v=1;}else{v=0;}; break;
+  case 'g': if (eval(a->getLeft()) > eval(a->getRight())){v=1;}else{v=0;}; break;
+  case 'G': if (eval(a->getLeft()) >= eval(a->getRight())){v=1;}else{v=0;}; break;
+  case 'e': if (eval(a->getLeft()) != eval(a->getRight())){v=1;}else{v=0;}; break;
+  case 'E': if (eval(a->getLeft()) == eval(a->getRight())){v=1;}else{v=0;}; break;
   case 'M': v = -eval(a->getLeft()); break;
   case 'P': v = pow(eval(a->getLeft()),eval(a->getRight())); break;
   case 'I': ptr = table.find(a->getIdent());
@@ -32,7 +32,15 @@ double eval(Ast *a) {
                   break;
   case 'p': std::cout<<eval(a->getLeft());
   case 's': std::cout<<eval(a->getLeft());
-
+  // added 
+  case 'a': std::cout<<eval(a->getLeft()); break;
+  case 'b': std::cout<<eval(a->getstmt()); break;
+  case 'c': ;
+  case 'd': std::cout<<eval(a->getLeft()); break;
+  case 'f': std::cout<<eval(a->getLeft()); break;
+  case 'j': if (eval(a->getRight())){ return eval(a->getLeft());} else return 0;
+  case 'n': if (iff->eval()){then->eval();} else   return {else1->eval()}; break;
+  // end added
   case '%': v = int(eval(a->getLeft())) % int(eval(a->getRight()));  break;
   case '=': table[a->getIdent()] = eval(a->getLeft());break;
   default: std::cout << "internal error: bad node "
