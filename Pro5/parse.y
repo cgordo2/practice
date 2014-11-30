@@ -61,13 +61,18 @@ funcdef : DEF IDENT LPAREN parm_list RPAREN COLON stmt END {$$ = new AstFuncdef(
 
 parm_list 
         : expr COMMA parm_list {$$ = new AstParm('c',$1,$3);}//{$$ = 0;}
-        | expr {$$ = new AstExpress('d',$1);}//{$$ = 0;}
+        | expr {$$= 0;}//{$$ = new AstExpress('d',$1);}//{$$ = 0;}
         | {$$ = 0;}
         ;
 
 stmt    : line stmt {$$ = new AstStmt('s',$1);}
         | selection stmt {$$ = new AstSelect('f',$1,$2);}//{$$ = 0;}
-        | CR stmt{$$ = new AstStmt('s',$2);} //{$$ = 0;}
+        | CR stmt{  if ($2 == NULL) {
+              std::cout << "$2 is NULL in CR stmt" << std::endl;
+              $$ = $2;
+            }  else 
+                  $$ = new AstStmt('s',$2);
+                 } //{$$ = 0;}
         | {$$=0;}
         ;
 
@@ -78,8 +83,12 @@ selection
 
 line    : IDENT ASSIGN expr {$$ = new AstAssign('=',$1,$3);}
         | IDENT LPAREN parm_list RPAREN {$$ = 0;}
-        | PRINT expr {$$ = new AstPrint('p',$2);} // printing  out std::cout<< eval($2)
+        | PRINT expr { $$ = new AstPrint('p',$2);
+                        std::cout << "PRINTING: " << $2 << std::endl;
+                            } // printing  out std::cout<< eval($2)
         | RETURN expr{$$ = 0;}
+        | expr {std::cout << "Tracking, $2 is: " << $1 << std::endl;
+               $$ = new AstExpress('d',$1);}//{$$ =0;}
         ;
 
 expr    : expr PLUS expr { $$ = new AstNode('+', $1,$3); }
@@ -95,7 +104,9 @@ expr    : expr PLUS expr { $$ = new AstNode('+', $1,$3); }
         | expr NOTEQ expr {$$ = new AstNode('e',$1,$3);}
         | expr EQ expr {$$ = new AstNode('E',$1,$3);}
         | MINUS expr %prec NEG { $$ = new AstNode('M', $2, NULL); }
-        | NUMBER {$$ = new AstNumber('K', $1);  }
+        | NUMBER {$$ = new AstNumber('K', $1); 
+                      std::cout << "NUMBER IS: " << $1 << std::endl;
+                   }
         | IDENT { $$ = new AstIdent('I', $1);}
         | LPAREN expr RPAREN {$$ = $2;}
         ;

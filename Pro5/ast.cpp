@@ -39,7 +39,9 @@ double eval(Ast *a) {
   case 'd': std::cout<<eval(a->getLeft()); break;
   case 'f': std::cout<<eval(a->getLeft()); break;
   case 'j': if (eval(a->getRight())){ return eval(a->getLeft());} else return 0;
-  case 'n': if (iff->eval()){then->eval();} else   return {else1->eval()}; break;
+  case 'n': if (eval(a->getiff())){eval(a->getthen());} 
+             else   
+              return (eval(a->getelse1())); break;
   // end added
   case '%': v = int(eval(a->getLeft())) % int(eval(a->getRight()));  break;
   case '=': table[a->getIdent()] = eval(a->getLeft());break;

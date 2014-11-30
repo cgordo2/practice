@@ -25,6 +25,13 @@ Ast(int n) : id(setid()),nodetype(n) {}
   char getNodetype() const { return nodetype; }
   virtual Ast* getLeft() const { return 0; }
   virtual Ast* getRight() const {return 0; }
+  // added
+  virtual Ast* getstmt() const {return 0;}
+  virtual Ast* getparm() const {return 0;}
+  virtual Ast* getiff() const {return 0;}
+  virtual Ast* getthen() const {return 0;}
+  virtual Ast* getelse1() const {return 0;}
+  // end added
   virtual double getNumber() const { throw std::string("No Number"); }
   virtual char* getIdent() const { throw std::string("No Ident");}
 private:
@@ -106,7 +113,11 @@ class AstFuncdef : public Ast {
 public:
   AstFuncdef(char nodetype, char* i , Ast* p , Ast* s) : Ast(nodetype), ident(i), parm(p), stmt(s) {} 
   virtual ~AstFuncdef() {}
-  //virtual Ast* getLeft() const { return left; }
+  // added 
+  virtual char* getIdent() const { return ident; }
+  virtual Ast* getparm() const { return parm; }
+  virtual Ast* getstmt() const { return stmt; }
+  // end added 
 private:
   char *ident;
   Ast *parm;
@@ -156,7 +167,12 @@ class AstElse : public Ast {
 public:
   AstElse(char nodetype,Ast* i, Ast* t, Ast* e ) : Ast(nodetype), iff(i), then(t), else1(e)  {} 
   virtual ~AstElse() {}
-  //virtual Ast* getLeft() const { return left; }
+  // added 
+  virtual Ast* getiff() const { return iff; }
+  virtual Ast* getthen() const { return then; }
+  virtual Ast* getelse1() const { return else1; }
+ // end added 
+  
 private:
   Ast *iff;
   Ast *then;
