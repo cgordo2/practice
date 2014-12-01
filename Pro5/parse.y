@@ -51,7 +51,7 @@ extern int yylex();
 %type<ast> expr start funcdef parm_list stmt selection line 
 %%
 
-start   : start funcdef {$$ = new AstStart('a',$2); eval($$);}
+start   : start funcdef {$$ = new AstStart('a',$2);}
         | { ; } 
         ;
 
@@ -60,18 +60,18 @@ funcdef : DEF IDENT LPAREN parm_list RPAREN COLON stmt END {$$ = new AstFuncdef(
         ;           
 
 parm_list 
-        : expr COMMA parm_list {$$ = new AstParm('c',$1,$3);}
-        | expr {$$ = new AstExpress('d',$1);}
+        : expr COMMA parm_list {$$ = new AstNode('c',$1,$3);}
+        | expr {$$ = new AstNode('d',$1, NULL);}
         | {$$ = 0;}
         ;
 
-stmt    : line stmt {$$ = new AstStmt('s',$1);}
-        | selection stmt {$$ = new AstSelect('f',$1,$2);}
+stmt    : line stmt {$$ = new AstNode('s',$1,NULL);}
+        | selection stmt {$$ = new AstNode('f',$1,$2);}
         | CR stmt{  if ($2 == NULL) {
               std::cout << "$2 is NULL in CR stmt" << std::endl;
               $$ = $2;
             }  else 
-                  $$ = new AstStmt('s',$2);
+                  $$ = new AstNode('s',$2,NULL);
             } 
         | {$$=0;}
         ;
@@ -85,7 +85,7 @@ line    : IDENT ASSIGN expr {$$ = new AstAssign('=',$1,$3);
                               std::cout<< "the Ident is:" << $1 << " the num is :"<< eval($3)<<std::endl;
                             }
         | IDENT LPAREN parm_list RPAREN {$$ = 0;}
-        | PRINT expr { $$ = new AstPrint('p',$2);
+        | PRINT expr { $$ = new AstNode('p',$2,NULL);
                         //std::cout << "PRINTING: " << eval($2) << std::endl;
                      } 
         | RETURN expr{$$ = 0;}
