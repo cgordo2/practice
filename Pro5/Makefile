@@ -1,4 +1,4 @@
-CCC = clang++
+CCC = g++
 LEX = flex
 YACC = bison
 CFLAGS = -Wall --coverage -g

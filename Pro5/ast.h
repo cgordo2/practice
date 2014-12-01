@@ -129,6 +129,7 @@ public:
   AstParm(char nodetype, Ast* l ,Ast* r) : Ast(nodetype), left(l) ,right(r){} 
   virtual ~AstParm() {}
   virtual Ast* getLeft() const { return left; }
+  virtual Ast* getRight() const {return right;}
 private:
   Ast *left;
   Ast *right;
@@ -148,6 +149,7 @@ public:
   AstSelect(char nodetype, Ast* l ,Ast* r) : Ast(nodetype), left(l), right(r) {} 
   virtual ~AstSelect() {}
   virtual Ast* getLeft() const { return left; }
+  virtual Ast* getRight() const {return right;}
 private:
   Ast *left;
   Ast *right;
@@ -158,6 +160,7 @@ public:
   AstIf(char nodetype, Ast* l, Ast* r) : Ast(nodetype), left(l), right(r) {} 
   virtual ~AstIf() {}
   virtual Ast* getLeft() const { return left; }
+  virtual Ast* getRight() const {return right;}
 private:
   Ast *left;
   Ast *right;
@@ -184,6 +187,7 @@ public:
   AstFunc(char nodetype, char* i, Ast* l ) : Ast(nodetype), ident(i), left(l) {} 
   virtual ~AstFunc() {}
   virtual Ast* getLeft() const { return left; }
+  virtual char* getIdent() const {return ident;}
 private:
   char *ident;
   Ast *left;

@@ -33,7 +33,7 @@ double eval(Ast *a) {
   case 'p': std::cout<<eval(a->getLeft());
   case 's': std::cout<<eval(a->getLeft());
   // added 
-  case 'a': std::cout<<eval(a->getLeft()); break;
+  case 'a': eval(a->getLeft()); break;
   case 'b': std::cout<<eval(a->getstmt()); break;
   case 'c': ;
   case 'd': std::cout<<eval(a->getLeft()); break;
@@ -44,7 +44,7 @@ double eval(Ast *a) {
               return (eval(a->getelse1())); break;
   // end added
   case '%': v = int(eval(a->getLeft())) % int(eval(a->getRight()));  break;
-  case '=': table[a->getIdent()] = eval(a->getLeft());break;
+  case '=': table[a->getIdent()] = eval(a->getLeft()); break;
   default: std::cout << "internal error: bad node "
                 << a->getNodetype() << std::endl;;
   }

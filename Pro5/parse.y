@@ -51,44 +51,45 @@ extern int yylex();
 %type<ast> expr start funcdef parm_list stmt selection line 
 %%
 
-start   : start funcdef {$$ = new AstStart('a',$2);}//{$$ = 0;}
+start   : start funcdef {$$ = new AstStart('a',$2); eval($$);}
         | { ; } 
         ;
 
-funcdef : DEF IDENT LPAREN parm_list RPAREN COLON stmt END {$$ = new AstFuncdef('b', $2,$4,$7); yyerrok;}
+funcdef : DEF IDENT LPAREN parm_list RPAREN COLON stmt END {$$ = new AstFuncdef('b', $2,$4,$7); eval($$); yyerrok;}
         | CR {$$ = 0;}
         ;           
 
 parm_list 
-        : expr COMMA parm_list {$$ = new AstParm('c',$1,$3);}//{$$ = 0;}
-        | expr {$$= 0;}//{$$ = new AstExpress('d',$1);}//{$$ = 0;}
+        : expr COMMA parm_list {$$ = new AstParm('c',$1,$3);}
+        | expr {$$ = new AstExpress('d',$1);}
         | {$$ = 0;}
         ;
 
 stmt    : line stmt {$$ = new AstStmt('s',$1);}
-        | selection stmt {$$ = new AstSelect('f',$1,$2);}//{$$ = 0;}
+        | selection stmt {$$ = new AstSelect('f',$1,$2);}
         | CR stmt{  if ($2 == NULL) {
               std::cout << "$2 is NULL in CR stmt" << std::endl;
               $$ = $2;
             }  else 
                   $$ = new AstStmt('s',$2);
-                 } //{$$ = 0;}
+            } 
         | {$$=0;}
         ;
 
 selection 
-        : IF expr COLON stmt %prec less_than_else END {$$ = new AstIf('j',$2,$4);}//{$$ = 0;}
-        | IF expr COLON stmt ELSE COLON stmt END {$$ = new AstElse('n',$2,$4,$7);}//{$$ = 0;}
+        : IF expr COLON stmt %prec less_than_else END {$$ = new AstIf('j',$2,$4);}
+        | IF expr COLON stmt ELSE COLON stmt END {$$ = new AstElse('n',$2,$4,$7);}
         ;
 
-line    : IDENT ASSIGN expr {$$ = new AstAssign('=',$1,$3);}
+line    : IDENT ASSIGN expr {$$ = new AstAssign('=',$1,$3);
+                              std::cout<< "the Ident is:" << $1 << " the num is :"<< $3<<std::endl;
+                            }
         | IDENT LPAREN parm_list RPAREN {$$ = 0;}
         | PRINT expr { $$ = new AstPrint('p',$2);
                         std::cout << "PRINTING: " << $2 << std::endl;
-                            } // printing  out std::cout<< eval($2)
+                     } 
         | RETURN expr{$$ = 0;}
-        | expr {std::cout << "Tracking, $2 is: " << $1 << std::endl;
-               $$ = new AstExpress('d',$1);}//{$$ =0;}
+        
         ;
 
 expr    : expr PLUS expr { $$ = new AstNode('+', $1,$3); }
@@ -107,7 +108,9 @@ expr    : expr PLUS expr { $$ = new AstNode('+', $1,$3); }
         | NUMBER {$$ = new AstNumber('K', $1); 
                       std::cout << "NUMBER IS: " << $1 << std::endl;
                    }
-        | IDENT { $$ = new AstIdent('I', $1);}
+        | IDENT { $$ = new AstIdent('I', $1);
+                  std::cout << "IDENT IS: " << $1 << std::endl;
+                }
         | LPAREN expr RPAREN {$$ = $2;}
         ;
 
