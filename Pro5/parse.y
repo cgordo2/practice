@@ -86,7 +86,7 @@ line    : IDENT ASSIGN expr {$$ = new AstAssign('=',$1,$3);
                             }
         | IDENT LPAREN parm_list RPAREN {$$ = 0;}
         | PRINT expr { $$ = new AstPrint('p',$2);
-                        std::cout << "PRINTING: " << eval($2) << std::endl;
+                        //std::cout << "PRINTING: " << eval($2) << std::endl;
                      } 
         | RETURN expr{$$ = 0;}
         

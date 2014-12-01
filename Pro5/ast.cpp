@@ -30,8 +30,8 @@ double eval(Ast *a) {
                       v=ptr->second;
                   } 
                   break;
-  case 'p': std::cout<<eval(a->getLeft());
-  case 's': std::cout<<eval(a->getLeft());
+  case 'p': v =  eval(a->getLeft()); std::cout<< "PrintingResult: "<< v <<std::endl;break;
+  case 's': std::cout<<eval(a->getLeft());break;
   // added 
   case 'a': eval(a->getLeft()); break;
   case 'b': std::cout<<eval(a->getstmt()); break;
