@@ -2,5 +2,5 @@ def f():
 
  x = 2
  y = 3
-   print y + x
+ print y + x
  end   

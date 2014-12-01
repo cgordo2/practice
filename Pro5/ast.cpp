@@ -12,39 +12,40 @@ double eval(Ast *a) {
   double v = 0;
   std::map<char*, int>::const_iterator ptr;
   switch( a->getNodetype() ) {
-  case 'K': v = a->getNumber(); break;
-  case '+': v = eval(a->getLeft()) + eval(a->getRight()); break;
-  case '-': v = eval(a->getLeft()) - eval(a->getRight()); break;
-  case '*': v = eval(a->getLeft()) * eval(a->getRight()); break;
-  case '/': v = eval(a->getLeft()) / eval(a->getRight()); break;
-  case 'l': if (eval(a->getLeft()) < eval(a->getRight())){v=1;}else{v=0;}; break;
-  case 'L': if (eval(a->getLeft()) <= eval(a->getRight())){v=1;}else{v=0;}; break;
-  case 'g': if (eval(a->getLeft()) > eval(a->getRight())){v=1;}else{v=0;}; break;
-  case 'G': if (eval(a->getLeft()) >= eval(a->getRight())){v=1;}else{v=0;}; break;
-  case 'e': if (eval(a->getLeft()) != eval(a->getRight())){v=1;}else{v=0;}; break;
-  case 'E': if (eval(a->getLeft()) == eval(a->getRight())){v=1;}else{v=0;}; break;
-  case 'M': v = -eval(a->getLeft()); break;
-  case 'P': v = pow(eval(a->getLeft()),eval(a->getRight())); break;
+  case 'K': v = a->getNumber(); std::cout<<" K\n";break;
+  case '+': v = eval(a->getLeft()) + eval(a->getRight()); std::cout<<" +\n"; break;
+  case '-': v = eval(a->getLeft()) - eval(a->getRight()); std::cout<<" -\n";break;
+  case '*': v = eval(a->getLeft()) * eval(a->getRight());std::cout<<" *\n"; break;
+  case '/': v = eval(a->getLeft()) / eval(a->getRight()); std::cout<<" /\n"; break;
+  case 'l': if (eval(a->getLeft()) < eval(a->getRight())){v=1;}else{v=0;}; std::cout<<" l\n";break;
+  case 'L': if (eval(a->getLeft()) <= eval(a->getRight())){v=1;}else{v=0;}; std::cout<<" L\n";break;
+  case 'g': if (eval(a->getLeft()) > eval(a->getRight())){v=1;}else{v=0;}; std::cout<<" g\n";break;
+  case 'G': if (eval(a->getLeft()) >= eval(a->getRight())){v=1;}else{v=0;}; std::cout<<" G\n";break;
+  case 'e': if (eval(a->getLeft()) != eval(a->getRight())){v=1;}else{v=0;}; std::cout<<" e\n";break;
+  case 'E': if (eval(a->getLeft()) == eval(a->getRight())){v=1;}else{v=0;}; std::cout<<" E\n";break;
+  case 'M': v = -eval(a->getLeft()); break; std::cout<<" M\n";
+  case 'P': v = pow(eval(a->getLeft()),eval(a->getRight())); std::cout<<" P\n";break;
   case 'I': ptr = table.find(a->getIdent());
                  if(ptr != table.end()){
                       v=ptr->second;
                   } 
+                  std::cout<<" I\n";
                   break;
-  case 'p': v =  eval(a->getLeft()); std::cout<< "PrintingResult: "<< v <<std::endl;break;
-  case 's': std::cout<<eval(a->getLeft());break;
+  case 'p': v =  eval(a->getLeft()); std::cout<< "PrintingResult: "<< v <<std::endl; std::cout<<" p\n";break;
+  case 's': std::cout<<" s\n";v=eval(a->getLeft()); if(eval(a->getRight())){v=eval(a->getRight());}break;
   // added 
-  case 'a': eval(a->getLeft()); break;
-  case 'b': std::cout<<eval(a->getstmt()); break;
+  case 'a': eval(a->getLeft()); std::cout<<" a\n";break;
+  case 'b': std::cout<<eval(a->getstmt());std::cout<<" b\n"; break;
   case 'c': ;
-  case 'd': std::cout<<eval(a->getLeft()); break;
-  case 'f': std::cout<<eval(a->getLeft()); break;
-  case 'j': if (eval(a->getRight())){ return eval(a->getLeft());} else return 0;
+  case 'd': std::cout<<eval(a->getLeft()); std::cout<<" c/d\n"; break;
+  case 'f': std::cout<<eval(a->getLeft()); std::cout<<" f\n";break;
+  case 'j': std::cout<<" j\n";if (eval(a->getRight())){ return eval(a->getLeft());} else return 0;
   case 'n': if (eval(a->getiff())){eval(a->getthen());} 
              else   
-              return (eval(a->getelse1())); break;
+              return (eval(a->getelse1())); std::cout<<" n\n";break;
   // end added
-  case '%': v = int(eval(a->getLeft())) % int(eval(a->getRight()));  break;
-  case '=': table[a->getIdent()] = eval(a->getLeft()); break;
+  case '%': v = int(eval(a->getLeft())) % int(eval(a->getRight()));  std::cout<<" %\n";break;
+  case '=': table[a->getIdent()] = eval(a->getLeft()); std::cout<<" =\n";break;
   default: std::cout << "internal error: bad node "
                 << a->getNodetype() << std::endl;;
   }
