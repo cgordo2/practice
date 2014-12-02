@@ -14,6 +14,7 @@ double eval(Ast *a) {
   double v = 0;
   std::map<std::string, int>::const_iterator ptr;
   std::map<std::string, int>::const_iterator pointer;
+  if(a != NULL)
   switch( a->getNodetype() ) {
   case 'K': v = a->getNumber(); std::cout<<" K\n";break;
   case '+': v = eval(a->getLeft()) + eval(a->getRight()); std::cout<<" +\n"; break;

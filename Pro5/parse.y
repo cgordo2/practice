@@ -3,7 +3,7 @@
 #include <cmath>    
 #include <map>
 #include <math.h>
-
+#include <ostream>
 #include "ast.h"   
 
 extern int yylex();
@@ -55,6 +55,15 @@ start   : start funcdef {
                            try
                     	   {
                     	        eval(new AstStart('a',$2));
+
+                              /*std::fstream output;
+                              output.open("graph.gv", std::ios::out);
+                              output << "digraph G {" << std::endl;
+                              makeGraph(new AstStart('a', $2),output);
+                              treeFree($1);
+                              output << "}" << std::endl;
+                              output.close();*/
+                              
                     	   }
                     	   catch (const std::string& msg) 
                     	   {

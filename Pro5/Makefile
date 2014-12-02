@@ -1,4 +1,4 @@
-CCC = g++
+CCC = clang++
 LEX = flex
 YACC = bison
 CFLAGS = -Wall --coverage -g
@@ -25,6 +25,9 @@ run: $(OBJS)
 
 main.o: main.cpp
 	$(CCC) $(CFLAGS) -c main.cpp
+
+ast.o: ast.cpp
+	$(CCC) $(CFLAGS) -c ast.cpp
 
 parse.tab.c: parse.y
 	$(YACC) $(YACCDEBUG) parse.y
