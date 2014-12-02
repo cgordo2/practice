@@ -8,12 +8,11 @@
 # include <map>
 
 std::map <std::string, int>table;
-std::map <std::string, int>functable;
 
 double eval(Ast *a) {
   double v = 0;
   std::map<std::string, int>::const_iterator ptr;
-  std::map<std::string, int>::const_iterator pointer;
+  std::cout << "about to call it " << a->getId() <<  std::endl << std::flush;
   switch( a->getNodetype() ) {
   case 'K': v = a->getNumber(); std::cout<<" K\n";break;
   case '+': v = eval(a->getLeft()) + eval(a->getRight()); std::cout<<" +\n"; break;
@@ -39,7 +38,6 @@ double eval(Ast *a) {
   // added 
   case 'a': eval(a->getLeft()); std::cout<<" a\n";break;
   case 'b': std::cout<<eval(a->getstmt());std::cout<<" b\n"; break;
-  //case 'm': std::cout<<eval(a->getstmt());std::cout<<" b\n"; break;
   case 'c': ;
   case 'd': std::cout<<eval(a->getLeft()); std::cout<<" c/d\n"; break;
   case 'f': std::cout<<eval(a->getLeft()); std::cout<<" f\n";break;

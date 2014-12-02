@@ -128,9 +128,7 @@ private:
   Ast *parm;
   Ast *stmt;
 };
-// added for main
 
-// end added for main 
 class AstParm : public Ast {
 public:
   AstParm(char nodetype, Ast* l ,Ast* r) : Ast(nodetype), left(l) ,right(r){} 
