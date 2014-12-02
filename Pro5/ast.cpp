@@ -35,7 +35,7 @@ double eval(Ast *a) {
                   std::cout<<" I\n";
                   break;
   case 'p': v =  eval(a->getLeft()); std::cout<< "PrintingResult: "<< v <<std::endl; std::cout<<" p\n";break;
-  case 's': std::cout<<" s\n";v=eval(a->getLeft()); if(eval(a->getRight())){v=eval(a->getRight());}break;
+  case 's': std::cout<<" s\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;
   // added 
   case 'a': eval(a->getLeft()); std::cout<<" a\n";break;
   case 'b': std::cout<<eval(a->getstmt());std::cout<<" b\n"; break;
@@ -43,7 +43,7 @@ double eval(Ast *a) {
   case 'c': ;
   case 'd': std::cout<<eval(a->getLeft()); std::cout<<" c/d\n"; break;
   case 'f': std::cout<<eval(a->getLeft()); std::cout<<" f\n";break;
-  case 'j': std::cout<<" j\n";if (eval(a->getRight())){ return eval(a->getLeft());} else return 0;
+  case 'j': std::cout<<" j\n";if (eval(a->getLeft())){ return eval(a->getRight());} else return 0;
   case 'n': if (eval(a->getiff())){eval(a->getthen());} 
              else   
               return (eval(a->getelse1())); std::cout<<" n\n";break;
@@ -70,7 +70,7 @@ void treeFree(Ast *a) {
    // one subtrees
   case 'M':
     treeFree(a->getLeft());
-
+    break;
    //no subtree
     case 'I':
     case 'K':
