@@ -41,8 +41,8 @@ double eval(Ast *a) {
   case 'b': std::cout<<eval(a->getstmt());std::cout<<" b\n"; break;
   //case 'm': std::cout<<eval(a->getstmt());std::cout<<" b\n"; break;
   case 'c': ;
-  case 'd': std::cout<<eval(a->getLeft()); std::cout<<" c/d\n"; break;
-  case 'f': std::cout<<eval(a->getLeft()); std::cout<<" f\n";break;
+  case 'd': std::cout<<" d\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;//std::cout<<eval(a->getLeft()); std::cout<<" c/d\n"; break;
+  case 'f': std::cout<<" f\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;//std::cout<<eval(a->getLeft()); std::cout<<" f\n";break;
   case 'j': std::cout<<" j\n";if (eval(a->getLeft())){ return eval(a->getRight());} else return 0;
   case 'n': if (eval(a->getiff())){eval(a->getthen());} 
              else   
@@ -106,6 +106,22 @@ void makeGraph(const Ast* node, std::fstream& output) {
     case '-':
     case '*':
     case '/': output <<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
+    break;
+    case '%': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
+    break;
+    case 'l': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
+    break;
+    case 'L': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
+    break;
+    case 'g': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
+    break;
+    case 'G': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
+    break;
+    case 'e': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
+    break;
+    case 'E': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
+    break;
+    case 's': output<< node->getLeft()<<"\"" <<"color=green frontcolor=black "; 
     break;
     }
    output << " style=fill fontsize=12 ]\n";
