@@ -2,3 +2,5 @@
 run
 *.yy.c
 *.tab.*
+*.*~
+*.gcno
