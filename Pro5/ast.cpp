@@ -113,6 +113,11 @@ void makeGraph(const Ast* node, std::fstream& output) {
     case 'G': 
     case 'e': 
     case 'E':
+    case 'a':
+    case 'b':
+    case 'd':
+    case 'j':
+    case 'n':
     case 's': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
     break;
     }

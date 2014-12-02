@@ -1,0 +1,7 @@
+digraph G {
+   2->0
+0[label ="3" color=blue fontcolor=black  style=fill fontsize=12 ]
+   2->1
+1[label ="4" color=blue fontcolor=black  style=fill fontsize=12 ]
+2[label ="+" color=green fontcolor=black  style=fill fontsize=12 ]
+}
