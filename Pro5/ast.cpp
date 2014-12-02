@@ -105,23 +105,15 @@ void makeGraph(const Ast* node, std::fstream& output) {
     case '+':
     case '-':
     case '*':
-    case '/': output <<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
-    break;
-    case '%': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
-    break;
-    case 'l': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
-    break;
-    case 'L': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
-    break;
-    case 'g': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
-    break;
-    case 'G': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
-    break;
-    case 'e': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
-    break;
-    case 'E': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black ";
-    break;
-    case 's': output<< node->getLeft()<<"\"" <<"color=green frontcolor=black "; 
+    case '/': 
+    case '%': 
+    case 'l': 
+    case 'L': 
+    case 'g': 
+    case 'G': 
+    case 'e': 
+    case 'E':
+    case 's': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
     break;
     }
    output << " style=fill fontsize=12 ]\n";
