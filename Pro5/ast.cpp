@@ -85,45 +85,51 @@ void treeFree(Ast *a) {
 
 void makeGraph(const Ast* node, std::fstream& output) {
   if ( node ) {
-    if ( node->getLeft() ) {
+    if ( node->getLeft() && node->getLeft() != NULL) {
       output << "   " << node->getid() << "->";
       output << node->getLeft()->getid() << std::endl;
       makeGraph( node->getLeft(), output );
     }
-    if ( node->getRight() ) {
+    if ( node->getRight() && node->getRight() != NULL) {
       output << "   " << node->getid() << "->";
       output << node->getRight()->getid() << std::endl;;
       makeGraph( node->getRight(), output );
     }
-    output << node -> getid()<<"[label =\"";
-         switch(node->getNodetype()){
-    case 'K': output << node->getNumber() <<"\""<<" color=blue fontcolor=black "; 
-    break;
-    case 'M': output << node->getNodetype()<<"\""<<" color=red fontcolor=black"; 
-    break;
-    case 'P': output <<node->getNodetype()<<"\""<<" color=green fontcolor=black "; 
-    break;
-    case '+':
-    case '-':
-    case '*':
-    case '/': 
-    case '%': 
-    case 'l': 
-    case 'L': 
-    case 'g': 
-    case 'G': 
-    case 'e': 
-    case 'E':
-    case 'a':
-    case 'b':
-    case 'd':
-    case 'j':
-    case 'n':
-    case 's': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
-    break;
+    if(node->getstmt()){
+      output << "   " << node->getid() << "->";
+      output << node->getstmt()->getid() << std::endl;;
+      makeGraph( node->getstmt(), output );
     }
-   output << " style=fill fontsize=12 ]\n";
-
+    output << node -> getid()<<"[label =\"";
+    if(node != NULL){
+      switch(node->getNodetype()){
+        case 'K': output << node->getNumber() <<"\""<<" color=blue fontcolor=black "; 
+            break;
+        case 'M': output << node->getNodetype()<<"\""<<" color=red fontcolor=black"; 
+            break;
+        case 'P': output <<node->getNodetype()<<"\""<<" color=green fontcolor=black "; 
+          break;
+      case '+':
+      case '-':
+      case '*':
+      case '/': 
+      case '%': 
+      case 'l': 
+      case 'L': 
+      case 'g': 
+      case 'G': 
+      case 'e': 
+      case 'E':
+      case 'a':
+      case 'b':
+      case 'd':
+      case 'j':
+      case 'n':
+      case 's': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      default:std::cout<<"error with node: " << node->getNodetype()<<std::endl;//output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+    }
+   output << " style=filled fontsize=12 ]\n";
+  }
   }
 }
 

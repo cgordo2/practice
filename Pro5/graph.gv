@@ -1,0 +1,35 @@
+digraph G {
+   17->15
+   15->14
+   14->13
+   13->1
+   1->0
+0[label ="2" color=blue fontcolor=black  style=filled fontsize=12 ]
+1[label =" style=filled fontsize=12 ]
+   13->12
+   12->11
+   11->3
+   3->2
+2[label ="3" color=blue fontcolor=black  style=filled fontsize=12 ]
+3[label =" style=filled fontsize=12 ]
+   11->10
+   10->9
+   9->7
+   7->6
+   6->4
+4[label =" style=filled fontsize=12 ]
+   6->5
+5[label =" style=filled fontsize=12 ]
+6[label ="+" color=green fontcolor=black  style=filled fontsize=12 ]
+7[label =" style=filled fontsize=12 ]
+   9->8
+8[label ="s" color=green fontcolor=black  style=filled fontsize=12 ]
+9[label ="s" color=green fontcolor=black  style=filled fontsize=12 ]
+10[label ="s" color=green fontcolor=black  style=filled fontsize=12 ]
+11[label ="s" color=green fontcolor=black  style=filled fontsize=12 ]
+12[label ="s" color=green fontcolor=black  style=filled fontsize=12 ]
+13[label ="s" color=green fontcolor=black  style=filled fontsize=12 ]
+14[label ="s" color=green fontcolor=black  style=filled fontsize=12 ]
+15[label ="b" color=green fontcolor=black  style=filled fontsize=12 ]
+17[label ="a" color=green fontcolor=black  style=filled fontsize=12 ]
+}

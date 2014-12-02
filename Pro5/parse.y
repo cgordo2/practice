@@ -56,13 +56,13 @@ start   : start funcdef {
                     	   {
                     	        eval(new AstStart('a',$2));
 
-                              /*std::fstream output;
+                              std::fstream output;
                               output.open("graph.gv", std::ios::out);
                               output << "digraph G {" << std::endl;
                               makeGraph(new AstStart('a', $2),output);
-                              treeFree($1);
+                              //treeFree($1);
                               output << "}" << std::endl;
-                              output.close();*/
+                              output.close();
                               
                     	   }
                     	   catch (const std::string& msg) 
