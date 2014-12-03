@@ -42,6 +42,8 @@ double eval(Ast *a) {
   case 'b': std::cout<<eval(a->getstmt());std::cout<<" b\n"; break;
   //case 'm': std::cout<<eval(a->getstmt());std::cout<<" b\n"; break;
   case 'c': ;
+  case 'i':  std::cout<<" i\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;
+  case 't':  std::cout<<" t\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;
   case 'd': std::cout<<" d\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;//std::cout<<eval(a->getLeft()); std::cout<<" c/d\n"; break;
   case 'f': std::cout<<" f\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;//std::cout<<eval(a->getLeft()); std::cout<<" f\n";break;
   case 'j': std::cout<<" j\n";if (eval(a->getLeft())){ return eval(a->getRight());} else return 0;
@@ -66,9 +68,11 @@ void treeFree(Ast *a) {
   case '/':
   case 'P':
   case '%':
+
     treeFree(a->getRight());
 
    // one subtrees
+    case 'p':
   case 'M':
     treeFree(a->getLeft());
     break;
@@ -109,26 +113,28 @@ void makeGraph(const Ast* node, std::fstream& output) {
             break;
         case 'P': output <<node->getNodetype()<<"\""<<" color=green fontcolor=black "; 
           break;
-      case '+':
-      case '-':
-      case '*':
-      case '/': 
-      case '%': 
-      case 'l': 
-      case 'L': 
-      case 'g': 
-      case 'G': 
-      case 'e': 
-      case 'E':
-      case 'a':
-      case 'b':
-      case 'd':
-      case 'j':
-      case 'n':
-      case 'I':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
-      case 'p':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
-      case '=':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
-      case 's': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case '+':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case '-':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case '*':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case '/': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case '%': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case 'l': output<<"<"<<"\""<<" color=green fontcolor=black "; break;
+      case 'L': output<<"<="<<"\""<<" color=green fontcolor=black "; break;
+      case 'g': output<<">"<<"\""<<" color=green fontcolor=black "; break;
+      case 'G': output<<">="<<"\""<<" color=green fontcolor=black "; break;
+      case 'e': output<<"!="<<"\""<<" color=green fontcolor=black "; break;
+      case 'E':output<<"=="<<"\""<<" color=green fontcolor=black "; break;
+      case 'a':output<<"Start"<<"\""<<" color=green fontcolor=black "; break;
+      case 'b':output<<"Funcdef"<<"\""<<" color=green fontcolor=black "; break;
+      case 'd':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case 'j':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case 'n':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case 'i':output<<"Lines"<<"\""<<" color=green fontcolor=black "; break;
+      case 't':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case 'I':output<<"Ident"<<"\""<<" color=green fontcolor=black "; break;
+      case 'p':output<<"Print"<<"\""<<" color=green fontcolor=black "; break;
+      case '=':output<<"Assign"<<"\""<<" color=green fontcolor=black "; break;
+      case 's': output<<"Statement"<<"\""<<" color=green fontcolor=black "; break;
       default:std::cout<<"error with node: " << node->getNodetype()<<std::endl;//output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
     }
    output << " style=filled fontsize=12 ]\n";

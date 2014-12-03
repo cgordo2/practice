@@ -5,7 +5,7 @@
 #include <math.h>
 #include <ostream>
 #include "ast.h"   
-
+extern std::fstream output;
 extern int yylex();
 
   void yyerror(const char * msg){ std::cout << msg << std::endl; }
@@ -56,13 +56,10 @@ start   : start funcdef {
                     	   {
                     	        eval(new AstStart('a',$2));
 
-                              std::fstream output;
-                              output.open("graph.gv", std::ios::out);
-                              output << "digraph G {" << std::endl;
+                  
                               makeGraph(new AstStart('a', $2),output);
                               //treeFree($1);
-                              output << "}" << std::endl;
-                              output.close();
+                              
                               
                     	   }
                     	   catch (const std::string& msg) 
@@ -73,8 +70,7 @@ start   : start funcdef {
                          }
         | { ; } 
         ;
-//main    : DEF IDENT LPAREN parm_list RPAREN COLON stmt END {$$ = new AstMain('m', $2,$4,$7); yyerrok;}//{$$ =0;}
-         //;        
+     
 
 funcdef : DEF IDENT LPAREN parm_list RPAREN COLON stmt END {$$ = new AstFuncdef('b', $2,$4,$7); yyerrok;}
         | CR {$$ = 0;}
@@ -86,8 +82,8 @@ parm_list
         | {$$ = 0;}
         ;
 
-stmt    : line stmt {$$ = new AstNode('s',$1,$2);}
-        | selection stmt {$$ = new AstNode('f',$1,$2);}
+stmt    : line stmt {$$ = new AstNode('s',$$ = new AstNode('i',$1,NULL),$2);}
+        | selection stmt {$$ = new AstNode('f',$$ = new AstNode('t',$1,NULL),$2);}
         | CR stmt{ $$ = new AstNode('s',$2,NULL); } 
         | {$$=0;}
         ;

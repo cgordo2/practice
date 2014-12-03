@@ -49,6 +49,6 @@ clean:
 	rm -rf report cov.info
 
 graph:
-	make test
+	#make test
 	dot -Tpng graph.gv -o graph.png
 	see *.png
