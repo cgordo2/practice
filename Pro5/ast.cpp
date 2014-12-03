@@ -125,6 +125,9 @@ void makeGraph(const Ast* node, std::fstream& output) {
       case 'd':
       case 'j':
       case 'n':
+      case 'I':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case 'p':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case '=':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
       case 's': output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
       default:std::cout<<"error with node: " << node->getNodetype()<<std::endl;//output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
     }
