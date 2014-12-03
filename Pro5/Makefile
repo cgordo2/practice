@@ -47,3 +47,8 @@ clean:
 	rm -f graph.gv graph.png
 	rm -f *.gcda *.gcno *.bb *.bbg *.da *.gcov
 	rm -rf report cov.info
+
+graph:
+	make test
+	dot -Tpng graph.gv -o graph.png
+	see *.png
