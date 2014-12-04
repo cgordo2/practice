@@ -27,8 +27,8 @@ extern int yylex();
 %token ASSIGN
 %token PRINT
 %token <id>IDENT 
-%token <dub>NUMBER
-%token FLOAT
+%token <num>NUMBER
+%token <dub>FLOAT
 %token LPAREN
 %token RPAREN
 %token DEF
@@ -118,6 +118,9 @@ expr    : expr PLUS expr { $$ = new AstNode('+', $1,$3); }
         | expr EQ expr {$$ = new AstNode('E',$1,$3);}
         | MINUS expr %prec NEG { $$ = new AstNode('M', $2, NULL); }
         | NUMBER {$$ = new AstNumber('K', $1); 
+                      //std::cout << "NUMBER IS: " << $1 << std::endl;
+                   }
+        | FLOAT {$$ = new AstNumber('F', $1); 
                       //std::cout << "NUMBER IS: " << $1 << std::endl;
                    }
         | IDENT { $$ = new AstIdent('I', $1);

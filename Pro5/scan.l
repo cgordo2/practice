@@ -48,11 +48,11 @@ float       {digits}"."{digits}
   		strcpy(yylval.id, yytext);
   		return IDENT; }
 
-{float}    { 
+{float}    { yylval.dub = atoi(yytext);
              return FLOAT; 
            }
 {digits}   { 
-			yylval.dub = atoi(yytext);
+			yylval.num = atoi(yytext);
              return NUMBER; 
            }
 "#"[^\n]*  { ; }
