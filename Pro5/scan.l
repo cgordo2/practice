@@ -17,6 +17,7 @@ digit       [0-9]
 digits      [0-9]+
 float       {digits}"."{digits}
 
+
 %%
 
 "**"       { return EXPON; }
@@ -48,7 +49,7 @@ float       {digits}"."{digits}
   		strcpy(yylval.id, yytext);
   		return IDENT; }
 
-{float}    { yylval.dub = atoi(yytext);
+{float}    { yylval.dub = atof(yytext);
              return FLOAT; 
            }
 {digits}   { 

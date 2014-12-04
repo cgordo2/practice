@@ -10,8 +10,8 @@
 std::map <std::string, int>table;
 std::map <std::string, int>functable;
 
-double eval(Ast *a) {
-  double v = 0;
+double  eval(Ast *a) {
+  float v = 0;
   std::map<std::string, int>::const_iterator ptr;
   std::map<std::string, int>::const_iterator pointer;
   if(a != NULL)
@@ -68,22 +68,31 @@ void treeFree(Ast *a) {
   case '*':
   case '/':
   case 'P':
-  case '%':
+  case '%': {
+      treeFree(a->getLeft());
+      treeFree(a->getRight());
+      delete a;
+      break;
+    }
 
-    treeFree(a->getRight());
-
+    
    // one subtrees
     case 'p':
-  case 'M':
-    treeFree(a->getLeft());
+    case 'M': {
+      treeFree(a->getLeft());
+      delete a;
+      break;
+    }
+    
     break;
    //no subtree
     case 'I':
     case 'K':
-    case 'F':
-    delete a;
-    break;
-
+    case 'F': {
+      delete a;
+      break;
+    }
+    
   default: std::cout << "internal error: bad node "
                 << a->getNodetype() << std::endl;;
   }

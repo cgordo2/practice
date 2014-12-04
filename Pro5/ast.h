@@ -32,7 +32,7 @@ Ast(char n) : id(setid()),nodetype(n) { }
   virtual Ast* getiff() const {return 0;}
   virtual Ast* getthen() const {return 0;}
   virtual Ast* getelse1() const {return 0;}
- // virtual double getFloat() const {throw std::string("No Float");}
+ //virtual float getFloat() const {throw std::string("No Float");}
   // end added
   virtual double getNumber() const { throw std::string("No Number"); }
   virtual std::string getIdent() const { throw std::string("No Ident");}
@@ -68,11 +68,11 @@ private:
 // added FLOAT
 class AstFloat : public Ast {
 public:
-  AstFloat(char nodetype, double f) : Ast(nodetype), flo(f) {} 
+  AstFloat(char nodetype, float f) : Ast(nodetype), flo(f) {} 
   virtual ~AstFloat() {}
-  virtual double getFloat() const { return flo; }
+  virtual float getFloat() const { return flo; }
 private:
-  double flo;
+  float flo;
 };
 // end FLOAT
 */

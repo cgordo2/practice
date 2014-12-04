@@ -94,7 +94,7 @@ selection
         ;
 
 line    : IDENT ASSIGN expr {$$ = new AstAssign('=',$1,$3);
-                              //std::cout<< "the Ident is:" << $1 << " the num is :"<< eval($3)<<std::endl;
+                              std::cout<< "the Ident is:" << $1 << " the num is :"<< eval($3)<<std::endl;
                             }
         | IDENT LPAREN parm_list RPAREN { $$ = 0; }
         | PRINT expr { $$ = new AstNode('p',$2,NULL);
