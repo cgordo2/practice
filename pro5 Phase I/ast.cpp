@@ -17,7 +17,6 @@ double eval(Ast *a) {
   if(a != NULL)
   switch( a->getNodetype() ) {
   case 'K': v = a->getNumber(); std::cout<<" K\n";break;
-  case 'F': v = a->getNumber(); std::cout<<" F\n";break;
   case '+': v = eval(a->getLeft()) + eval(a->getRight()); std::cout<<" +\n"; break;
   case '-': v = eval(a->getLeft()) - eval(a->getRight()); std::cout<<" -\n";break;
   case '*': v = eval(a->getLeft()) * eval(a->getRight());std::cout<<" *\n"; break;
@@ -80,7 +79,6 @@ void treeFree(Ast *a) {
    //no subtree
     case 'I':
     case 'K':
-    case 'F':
     delete a;
     break;
 
@@ -110,8 +108,6 @@ void makeGraph(const Ast* node, std::fstream& output) {
     if(node != NULL){
       switch(node->getNodetype()){
         case 'K': output << node->getNumber() <<"\""<<" color=blue fontcolor=black "; 
-            break;
-       case 'F': output << node->getNumber() <<"\""<<" color=blue fontcolor=black "; 
             break;
         case 'M': output << node->getNodetype()<<"\""<<" color=red fontcolor=black"; 
             break;
