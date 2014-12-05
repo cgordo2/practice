@@ -54,10 +54,10 @@ extern int yylex();
 start   : start funcdef { 
                            try
                     	   {
-                    	        eval(new AstStart('a',$2));
+                    	        eval(new AstStart('A',$2));
 
                   
-                              makeGraph(new AstStart('a', $2),output);
+                              makeGraph(new AstStart('A', $2),output);
                               //treeFree($1);
                               
                               
@@ -83,7 +83,7 @@ parm_list
         ;
 
 stmt    : line stmt {$$ = new AstNode('s',$$ = new AstNode('i',$1,NULL),$2);}
-        | selection stmt {$$ = new AstNode('f',$$ = new AstNode('t',$1,NULL),$2);}
+        | selection stmt {$$ = new AstNode('f',$1, $$ = new AstNode('s',$2,NULL));}
         | CR stmt{ $$ = new AstNode('s',$2,NULL); } 
         | {$$=0;}
         ;
@@ -94,13 +94,13 @@ selection
         ;
 
 line    : IDENT ASSIGN expr {$$ = new AstAssign('=',$1,$3);
-                              std::cout<< "the Ident is:" << $1 << " the num is :"<< eval($3)<<std::endl;
+                             // std::cout<< "the Ident is:" << $1 << " the num is :"<< eval($3)<<std::endl;
                             }
         | IDENT LPAREN parm_list RPAREN { $$ = 0; }
         | PRINT expr { $$ = new AstNode('p',$2,NULL);
                         //std::cout << "PRINTING: " << eval($2) << std::endl;
                      } 
-        | RETURN expr{$$ = 0;}
+        | RETURN expr{$$ = 0;} //{$$ = new AstNode('R',$1,$2),}
         
         ;
 
@@ -118,10 +118,10 @@ expr    : expr PLUS expr { $$ = new AstNode('+', $1,$3); }
         | expr EQ expr {$$ = new AstNode('E',$1,$3);}
         | MINUS expr %prec NEG { $$ = new AstNode('M', $2, NULL); }
         | NUMBER {$$ = new AstNumber('K', $1); 
-                      std::cout << "NUMBER IS: " << $1 << std::endl;
+                      //std::cout << "NUMBER IS: " << $1 << std::endl;
                    }
         | FLOAT {$$ = new AstNumber('F', $1); 
-                      std::cout << "NUMBER FLOAT IS: " << $1 << std::endl;
+                     // std::cout << "NUMBER FLOAT IS: " << $1 << std::endl;
                    }
         | IDENT { $$ = new AstIdent('I', $1);
                   //std::cout << "IDENT IS: " << $1 << std::endl;

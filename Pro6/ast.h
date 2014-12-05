@@ -1,6 +1,5 @@
 //  Declarations for an AST calculator
 //  From "flex & bison", fb3-1, by John Levine
-//  Adapted by Brian Malloy
 
 #include <string>
 #include <iostream>

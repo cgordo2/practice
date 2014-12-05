@@ -7,12 +7,12 @@
 # include <math.h>
 # include <map>
 
-std::map <std::string, int>table;
+std::map <std::string, float>table;
 std::map <std::string, int>functable;
 
 double  eval(Ast *a) {
-  float v = 0;
-  std::map<std::string, int>::const_iterator ptr;
+  double v = 0;
+  std::map<std::string, float>::const_iterator ptr;
   std::map<std::string, int>::const_iterator pointer;
   if(a != NULL)
   switch( a->getNodetype() ) {
@@ -39,16 +39,16 @@ double  eval(Ast *a) {
   case 'p': v =  eval(a->getLeft()); std::cout<< "PrintingResult: "<< v <<std::endl; std::cout<<" p\n";break;
   case 's': std::cout<<" s\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;
   // added 
-  case 'a': eval(a->getLeft()); std::cout<<" a\n";break;
+  case 'A': eval(a->getLeft()); std::cout<<" a\n";break;
   case 'b': std::cout<<eval(a->getstmt());std::cout<<" b\n"; break;
   //case 'm': std::cout<<eval(a->getstmt());std::cout<<" b\n"; break;
   case 'c': ;
   case 'i':  std::cout<<" i\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;
-  case 't':  std::cout<<" t\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;
+  //case 't':  std::cout<<" t\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;
   case 'd': std::cout<<" d\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;//std::cout<<eval(a->getLeft()); std::cout<<" c/d\n"; break;
   case 'f': std::cout<<" f\n";if(a->getLeft()){v=eval(a->getLeft());} if(a->getRight()){v=eval(a->getRight());}break;//std::cout<<eval(a->getLeft()); std::cout<<" f\n";break;
   case 'j': std::cout<<" j\n";if (eval(a->getLeft())){ return eval(a->getRight());} else return 0;
-  case 'n': if (eval(a->getiff())){eval(a->getthen());} 
+  case 'n': if (eval(a->getiff())){return eval(a->getthen());} 
              else   
               return (eval(a->getelse1())); std::cout<<" n\n";break;
   // end added
@@ -137,13 +137,13 @@ void makeGraph(const Ast* node, std::fstream& output) {
       case 'G': output<<">="<<"\""<<" color=green fontcolor=black "; break;
       case 'e': output<<"!="<<"\""<<" color=green fontcolor=black "; break;
       case 'E':output<<"=="<<"\""<<" color=green fontcolor=black "; break;
-      case 'a':output<<"Start"<<"\""<<" color=green fontcolor=black "; break;
+      case 'A':output<<"Start"<<"\""<<" color=green fontcolor=black "; break;
       case 'b':output<<"Funcdef"<<"\""<<" color=green fontcolor=black "; break;
-      case 'd':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
-      case 'j':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
-      case 'n':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case 'd':output<<"Expression"<<"\""<<" color=green fontcolor=black "; break;
+      case 'j':output<<"If"<<"\""<<" color=green fontcolor=black "; break;
+      case 'n':output<<"Else"<<"\""<<" color=green fontcolor=black "; break;
       case 'i':output<<"Lines"<<"\""<<" color=green fontcolor=black "; break;
-      case 't':output<<node->getNodetype()<<"\""<<" color=green fontcolor=black "; break;
+      case 'f':output<<"Selection"<<"\""<<" color=green fontcolor=black "; break;
       case 'I':output<<"Ident"<<"\""<<" color=green fontcolor=black "; break;
       case 'p':output<<"Print"<<"\""<<" color=green fontcolor=black "; break;
       case '=':output<<"Assign"<<"\""<<" color=green fontcolor=black "; break;
